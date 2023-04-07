@@ -30,6 +30,7 @@ interface Pokemon {
 
 const Home: FC = () => {
   const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
+  const [pokemonImage, setPokemonImage] = useState<string>(``);
   const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
@@ -72,9 +73,14 @@ const Home: FC = () => {
       <h1>Home Page</h1>
       <div className="grid gap-5 grid-cols-2 md:grid-cols-4 xl:grid-cols-6 ">
         {pokemonData.map((pokemon) => (
-          <div className="bg-slate-400">
-            <div key={pokemon.id}>
-              <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+          <div className="bg-slate-400 text-center items-center flex flex-col ">
+            <div key={pokemon.id} className="flex align-middle">
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
+                alt={pokemon.name}
+              />
+            </div>
+            <div>
               <div>{pokemon.name}</div>
               <div>
                 <strong>Types:</strong>{" "}
@@ -93,6 +99,7 @@ const Home: FC = () => {
           </div>
         ))}
       </div>
+      <button onClick={() => navigate("/list")}>go to lsit pokemon</button>
     </div>
   );
 };
