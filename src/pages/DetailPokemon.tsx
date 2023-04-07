@@ -89,7 +89,6 @@ const DetailPokemon: FC = () => {
                 </div>
                 <div></div>
               </div>
-
               <div className="bg-sky-500 rounded-yes m-3 md:m-5 px-2 pt-5 md:px-10 md:py-8">
                 <div className="py-1 px-10 text-center  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
                   State
@@ -105,7 +104,7 @@ const DetailPokemon: FC = () => {
                     </div>
                     <div className="z-10 h-8 md:h-12 rounded-full">
                       <div
-                        className="z-20 h-full rounded-full bg-sky-200 flex items-center justify-end pr-2 "
+                        className="z-20 h-full rounded-full bg-sky-200 flex items-center md:justify-end pr-2 "
                         style={{ width: `${stat.base_stat}%` }}
                       >
                         <p className="bg-sky-700 text-sky-50 md:font-bold px-1 font-semibold md:text-lg md:px-3 md:py-1 rounded-full">
@@ -117,7 +116,6 @@ const DetailPokemon: FC = () => {
                 ))}
               </div>
             </div>
-
             <div className="grid grid-cols-2 bg-sky-700 bg-opacity-50 rounded-yes my-14">
               <div className="p-7 text-center">
                 <div className="py-1 px-10  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
@@ -133,7 +131,6 @@ const DetailPokemon: FC = () => {
                   ))}
                 </div>
               </div>
-
               <div className="p-7 text-center">
                 <div className="py-1 px-10  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
                   Moves
