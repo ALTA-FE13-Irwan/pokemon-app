@@ -1,45 +1,14 @@
-import { FC, useState, useEffect } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { useParams, useNavigate } from "react-router-dom";
-import { MdCatchingPokemon } from "react-icons/md";
+import { FC, useState, useEffect } from "react";
+import { Layout } from "../komponents/Layout";
+import Swal from "sweetalert2";
+import axios from "axios";
 
-interface Pokemon {
-  id: number;
-  name: string;
-  height: number;
-  weight: number;
-  types: {
-    type: {
-      name: string;
-    };
-  }[];
-  abilities: {
-    ability: {
-      name: string;
-    };
-  }[];
-  moves: {
-    move: {
-      name: string;
-    };
-  }[];
-  sprites: {
-    front_default: string;
-  };
-  stats: {
-    base_stat: number;
-    stat: {
-      name: string;
-    };
-  }[];
-}
+import { Pokemon } from "../utils/user";
 
 const DetailPokemon: FC = () => {
   const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [nickName, setNikname] = useState<string>("");
-  const [pokeId, setPokeId] = useState<number>();
 
   const params = useParams();
   const navigate = useNavigate();
@@ -68,79 +37,131 @@ const DetailPokemon: FC = () => {
       });
   };
 
-  // function handleNickname(event) {
-  //   setNikname(event.target.value);
-  // }
-
-  const handleCatch = () => {};
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>Detail Page</h1>
-      <div className="">
-        {pokemonData.map((pokemon) => (
-          <div key={pokemon.id}>
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
-              alt={pokemon.name}
-            />
-            <div>{pokemon.name}</div>
-            <div>Height: {pokemon.height}</div>
-            <div>Weight: {pokemon.weight}</div>
-            <div>
-              Types:
-              {pokemon.types.map((type) => (
-                <span key={type.type.name}>{type.type.name} </span>
-              ))}
-            </div>
-            <div>
-              Abilities:
-              {pokemon.abilities.map((ability) => (
-                <span key={ability.ability.name}>{ability.ability.name} </span>
-              ))}
-            </div>
-            <div>
-              Moves:
-              {pokemon.moves.slice(0, 5).map((move) => (
-                <span key={move.move.name}>{move.move.name} </span>
-              ))}
-            </div>
-            <div>
-              State:
-              {pokemon.stats.map((stat) => (
-                <span key={stat.stat.name}>
-                  {stat.stat.name}: {stat.base_stat}{" "}
-                </span>
-              ))}
-            </div>
-            <div>
-              <button
-                type="button"
-                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                onClick={() => navigate("/")}
-              >
-                back to home
-              </button>
+    <Layout>
+      {pokemonData.map((pokemon) => (
+        <div className="h-full ">
+          <div key={pokemon.id} className=" grid grid-cols-1">
+            <div className="grid grid-cols-2 bg-sky-700 bg-opacity-50 rounded-yes ">
+              <div className=" flex flex-col justify-center text-center p-5 ">
+                <div className="flex justify-center">
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
+                    alt={pokemon.name}
+                    className="w-96"
+                  />
+                </div>
+                <div>
+                  <div className="text-sky-100 font-extrabold text-2xl md:text-5xl mt-4 md:mt-10">
+                    {pokemon.name}
+                  </div>
+                  <div className="grid md:grid-cols-2 ">
+                    <div className=" py-5 md:py-10 px-2">
+                      <div className="py-1 px-10  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
+                        Volume
+                      </div>
+                      <div className="grid grid-flow-col auto-cols gap-2">
+                        <div className="py-4 bg-sky-500 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 ">
+                          H: {pokemon.height}
+                        </div>
+                        <div className="py-4 bg-sky-500 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50">
+                          W: {pokemon.weight}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="py-5 md:py-10 px-2">
+                      <div className="py-1 px-10  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
+                        Type
+                      </div>
+                      <div className="grid md:grid-flow-col auto-cols gap-2">
+                        {pokemon.types.map((type) => (
+                          <div className="py-4 bg-sky-500 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 ">
+                            <span key={type.type.name}>{type.type.name} </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div></div>
+              </div>
 
+              <div className="bg-sky-500 rounded-yes m-3 md:m-5 px-2 pt-5 md:px-10 md:py-8">
+                <div className="py-1 px-10 text-center  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
+                  State
+                </div>
+
+                {pokemon.stats.map((stat) => (
+                  <div
+                    key={stat.stat.name}
+                    className="rounded-full flex flex-col"
+                  >
+                    <div className=" md:text-xl font-semibold text-sky-50 mt-2 mb-1">
+                      {stat.stat.name}
+                    </div>
+                    <div className="z-10 h-8 md:h-12 rounded-full">
+                      <div
+                        className="z-20 h-full rounded-full bg-sky-200 flex items-center justify-end pr-2 "
+                        style={{ width: `${stat.base_stat}%` }}
+                      >
+                        <p className="bg-sky-700 text-sky-50 md:font-bold px-1 font-semibold md:text-lg md:px-3 md:py-1 rounded-full">
+                          {stat.base_stat}%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 bg-sky-700 bg-opacity-50 rounded-yes my-14">
+              <div className="p-7 text-center">
+                <div className="py-1 px-10  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
+                  Abilities
+                </div>
+                <div className="grid md:grid-cols-2 gap-2">
+                  {pokemon.abilities.map((ability) => (
+                    <div key={ability.ability.name}>
+                      <div className="py-4 bg-sky-500 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 ">
+                        {ability.ability.name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-7 text-center">
+                <div className="py-1 px-10  border-b-4 border-sky-50 rounded-full mb-3 md:mb-5 drop-shadow-lg shadow-sky-50 text-sky-50 md:text-2xl font-bold">
+                  Moves
+                </div>
+                <div className="grid md:grid-cols-2  gap-2">
+                  {pokemon.moves.slice(0, 5).map((move) => (
+                    <div key={move.move.name}>
+                      <div className="py-4 bg-sky-500 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 ">
+                        {move.move.name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="grid justify-items-center">
               <button
-                type="button"
-                className=" ml-2 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-orange-500 text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                data-hs-overlay="#hs-vertically-centered-modal"
+                className=" py-0 md:py-4 bg-sky-700  rounded-full justify-center flex-col  border-b-8 border-r-8 border-orange-400 md:text-2xl font-bold text-sky-50  uppercase"
                 onClick={() => navigate(`/${pokemon.id}/${pokemon.name}`)}
               >
-                Catch the pokemon
+                <img src="/catch.png" alt="" className="w-28 md:w-32" />
+                <p> catch pokemon</p>
               </button>
             </div>
           </div>
-        ))}
-      </div>
-      <button onClick={() => navigate("/")}>go to home</button>
-      <button onClick={() => navigate("/list")}>go to lsit pokemon</button>
-    </div>
+        </div>
+      ))}
+    </Layout>
   );
 };
 
