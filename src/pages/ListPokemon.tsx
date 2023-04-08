@@ -67,7 +67,7 @@ const ListPokemon: FC = () => {
           />
         </div>
       ) : (
-        <div className="h-screen">
+        <div className="h-full">
           <div className="grid gap-5 md:gap-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             {items.map((item) => (
               <div className="text-center items-center  bg-sky-600 hover:bg-sky-300 bg-opacity-20 rounded-t-full rounded-b-lg hover:scale-105">
