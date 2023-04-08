@@ -1,14 +1,22 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, CSSProperties } from "react";
+import PacmanLoader from "react-spinners/PacmanLoader";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../komponents/Layout";
 import Swal from "sweetalert2";
 import axios from "axios";
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 import { Pokemon } from "../utils/user";
 
 const Home: FC = () => {
   const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [color, setColor] = useState("#ffffff");
 
   const navigate = useNavigate();
 
@@ -41,15 +49,20 @@ const Home: FC = () => {
       });
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Layout>
       <div>
         {loading ? (
-          <div>Loading...</div>
+          <div className="h-screen">
+            <PacmanLoader
+              color={color}
+              loading={loading}
+              cssOverride={override}
+              size={100}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
         ) : (
           <div className="grid gap-5 md:gap-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             {pokemonData.map((pokemon) => (

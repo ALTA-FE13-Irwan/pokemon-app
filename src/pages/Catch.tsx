@@ -1,17 +1,31 @@
-import { FC, useState, useEffect, FormEvent, ChangeEvent } from "react";
+import {
+  FC,
+  useState,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+  CSSProperties,
+} from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import PacmanLoader from "react-spinners/PacmanLoader";
 import Swal from "sweetalert2";
 import axios from "axios";
 
 import { Pokemon } from "../utils/user";
 
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+};
+
 const Catch: FC = () => {
+  const [modalSuccessCatch, setModalSuccessCatch] = useState<boolean>(false);
   const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [pokeName, setPokeName] = useState<string>("");
   const [nickName, setNikname] = useState<string>("");
   const [pokeId, setPokeId] = useState<string>("");
-  const [pokeName, setPokeName] = useState<string>("");
-  const [modalSuccessCatch, setModalSuccessCatch] = useState<boolean>(false);
+  const [color, setColor] = useState("#ffffff");
 
   const params = useParams<{ id: string; name: string }>();
   const navigate = useNavigate();
@@ -80,92 +94,112 @@ const Catch: FC = () => {
     event.preventDefault();
     const userData = { pokeId, pokeName };
 
-    const existingData = localStorage.getItem(nickName);
+    console.log(nickName);
 
-    if (existingData) {
+    if (nickName) {
+      const existingData = localStorage.getItem(nickName);
+      if (existingData) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: " Nickname is existed, type different name",
+        });
+      } else {
+        localStorage.setItem(nickName, JSON.stringify(userData));
+        setPokeId("");
+        setNikname("");
+        setPokeName("");
+        Swal.fire({
+          icon: "success",
+          title: "Good Job !!!",
+          text: " Success put pokemon to bucket",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/");
+          }
+        });
+      }
+    } else {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: " Nickname is existed, type different name",
-      });
-    } else {
-      localStorage.setItem(nickName, JSON.stringify(userData));
-      setPokeId("");
-      setNikname("");
-      setPokeName("");
-      Swal.fire({
-        icon: "success",
-        title: "Good Job !!!",
-        text: " Success put pokemon to bucket",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/");
-        }
+        text: " Nickname cannot empty",
       });
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="h-screen md:h-screen bg-[url('/background.jpg')]  bg-cover bg-center flex flex-col justify-between p-2">
-      {pokemonData.map((pokemon) => (
-        <div className="flex flex-col justify-between">
-          <div className="flex flex-col md:flex-row justify-around pt-5 md:pt-10">
-            <button
-              className="font-medium text-lg text-sky-50 bg-sky-700 border-b-8 border-r-8 border-rose-400 px-10 py-5 my-2 mx-5 md:mx-0 rounded-full hover:bg-sky-400 hover:text-xl md:w-[30%]"
-              onClick={() => navigate("/")}
-            >
-              Back To Home
-            </button>
-            <button
-              className="font-medium text-lg text-sky-50 bg-sky-700 border-b-8 border-r-8 border-rose-400 px-10 py-5 my-2 mx-5 md:mx-0 rounded-full hover:bg-sky-400 hover:text-xl md:w-[30%]"
-              onClick={() => navigate("/list")}
-            >
-              Catch List Pokemon
-            </button>
-          </div>
-
-          <div
-            key={pokemon.id}
-            className="flex  justify-center content-center items-center pt-36 md:pt-48"
-          >
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
-              alt={pokemon.name}
-              className=" w-32 h-32 md:w-56 md:h-56 hover:scale-105 duration-500 animate-bounce"
-            />
-          </div>
-
-          <div className="flex flex-row justify-around md:gap-10 pt-28 md:pt-44 mb:pb-10">
-            <div className=" flex px-5 md:px-48 py-4 bg-amber-600 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl">
-              {pokemon.name}
-            </div>
-            <div className="grid grid-cols-2 gap-2 mx-2 md:mx-10 md:gap-10">
-              <button
-                type="button"
-                className=" px-5 py-4 bg-sky-700 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl"
-                onClick={() => navigate(`/${id}`)}
-              >
-                let it go
-              </button>
-
-              <button
-                type="button"
-                className="py-4 bg-sky-700 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl"
-                data-hs-overlay="#hs-focus-management-modal"
-                onClick={() => {
-                  handleModalSuccessCatch();
-                }}
-              >
-                Catch
-              </button>
-            </div>
-          </div>
+      {loading ? (
+        <div className="h-screen">
+          <PacmanLoader
+            color={color}
+            loading={loading}
+            cssOverride={override}
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </div>
-      ))}
+      ) : (
+        <div>
+          {pokemonData.map((pokemon) => (
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col md:flex-row justify-around pt-5 md:pt-10">
+                <button
+                  className="font-medium text-lg text-sky-50 bg-sky-700 border-b-8 border-r-8 border-rose-400 px-10 py-5 my-2 mx-5 md:mx-0 rounded-full hover:bg-sky-400 hover:text-xl md:w-[30%]"
+                  onClick={() => navigate("/")}
+                >
+                  Back To Home
+                </button>
+                <button
+                  className="font-medium text-lg text-sky-50 bg-sky-700 border-b-8 border-r-8 border-rose-400 px-10 py-5 my-2 mx-5 md:mx-0 rounded-full hover:bg-sky-400 hover:text-xl md:w-[30%]"
+                  onClick={() => navigate("/list")}
+                >
+                  Catch List Pokemon
+                </button>
+              </div>
+
+              <div
+                key={pokemon.id}
+                className="flex  justify-center content-center items-center pt-36 md:pt-48"
+              >
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
+                  alt={pokemon.name}
+                  className=" w-32 h-32 md:w-56 md:h-56 hover:scale-105 duration-500 animate-bounce"
+                />
+              </div>
+
+              <div className="flex flex-row justify-around md:gap-10 pt-28 md:pt-44 mb:pb-10">
+                <div className=" flex px-5 md:px-48 py-4 bg-amber-600 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl">
+                  {pokemon.name}
+                </div>
+                <div className="grid grid-cols-2 gap-2 mx-2 md:mx-10 md:gap-10">
+                  <button
+                    type="button"
+                    className=" px-5 py-4 bg-sky-700 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl"
+                    onClick={() => navigate(`/${id}`)}
+                  >
+                    let it go
+                  </button>
+
+                  <button
+                    type="button"
+                    className="py-4 bg-sky-700 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl"
+                    data-hs-overlay="#hs-focus-management-modal"
+                    onClick={() => {
+                      handleModalSuccessCatch();
+                    }}
+                  >
+                    Catch
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* modal */}
       <div>
