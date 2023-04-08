@@ -113,7 +113,6 @@ const Catch: FC = () => {
     <div className="h-screen md:h-screen bg-[url('/background.jpg')]  bg-cover bg-center flex flex-col justify-between p-2">
       {pokemonData.map((pokemon) => (
         <div className="flex flex-col justify-between">
-          {/* row 1 */}
           <div className="flex flex-col md:flex-row justify-around pt-5 md:pt-10">
             <button
               className="font-medium text-lg text-sky-50 bg-sky-700 border-b-8 border-r-8 border-rose-400 px-10 py-5 my-2 mx-5 md:mx-0 rounded-full hover:bg-sky-400 hover:text-xl md:w-[30%]"
@@ -128,7 +127,7 @@ const Catch: FC = () => {
               Catch List Pokemon
             </button>
           </div>
-          {/* row 2 */}
+
           <div
             key={pokemon.id}
             className="flex  justify-center content-center items-center pt-36 md:pt-48"
@@ -139,7 +138,7 @@ const Catch: FC = () => {
               className=" w-44 md:w-56 hover:scale-105 duration-500 animate-bounce"
             />
           </div>
-          {/* row 3 */}
+
           <div className="flex flex-row justify-around md:gap-10 pt-28 md:pt-44 mb:pb-10">
             <div className=" flex px-5 md:px-48 py-4 bg-amber-600 rounded-full  border-b-8 border-r-8 md:text-2xl font-bold text-sky-50 justify-center text-center hover:scale-105 duration-500 hover:text-lg md:hover:text-xl xl:hover:text-2xl">
               {pokemon.name}
