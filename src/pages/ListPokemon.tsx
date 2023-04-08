@@ -66,8 +66,11 @@ const ListPokemon: FC = () => {
                   alt={`${item.pokeId}' image`}
                   className="w-full aspect-square"
                 />
-                <div className="text-sky-50 font-semibold py-5 text-2xl md:text-3xl capitalize">
-                  {item.pokeName}
+                <div className="text-amber-500 font-semibold text-2xl md:text-3xl capitalize">
+                  {item.key}
+                </div>
+                <div className="text-sky-50 font-semibold mb-4 text-2xl md:text-3xl capitalize">
+                  <p>({item.pokeName})</p>
                 </div>
                 <button
                   type="button"
