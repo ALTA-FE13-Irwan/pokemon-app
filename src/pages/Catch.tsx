@@ -135,7 +135,7 @@ const Catch: FC = () => {
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
               alt={pokemon.name}
-              className=" w-44 md:w-56 hover:scale-105 duration-500 animate-bounce"
+              className=" w-32 h-32 md:w-56 md:h-56 hover:scale-105 duration-500 animate-bounce"
             />
           </div>
 
