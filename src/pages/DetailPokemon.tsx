@@ -104,7 +104,7 @@ const DetailPokemon: FC = () => {
                     </div>
                     <div className="z-10 h-8 md:h-12 rounded-full">
                       <div
-                        className="z-20 h-full rounded-full bg-sky-200 flex items-center md:justify-end pr-2 "
+                        className="z-20 h-full rounded-full bg-sky-200 flex items-center lg:justify-end pr-2 "
                         style={{ width: `${stat.base_stat}%` }}
                       >
                         <p className="bg-sky-700 text-sky-50 md:font-bold px-1 font-semibold md:text-lg md:px-3 md:py-1 rounded-full">
