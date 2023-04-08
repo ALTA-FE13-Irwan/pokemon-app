@@ -10,7 +10,7 @@ const ListPokemon: FC = () => {
   useEffect(() => {
     const values = handleFetchData();
     setItems(values);
-  }, []);
+  }, [items]);
 
   const handleFetchData = () => {
     const keys = Object.keys(localStorage);
@@ -39,14 +39,7 @@ const ListPokemon: FC = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem(key);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
-          (result) => {
-            if (result.isConfirmed) {
-              const updatedItems = items.filter((item) => item.key !== key);
-              setItems(updatedItems);
-            }
-          }
-        );
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
     });
   };
