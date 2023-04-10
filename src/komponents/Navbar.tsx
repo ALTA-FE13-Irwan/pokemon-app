@@ -12,7 +12,7 @@ export const Navbar: FC = () => {
       >
         <div className="flex items-center justify-between">
           <button
-            className="flex-none text-2xl font-bold text-sky-200  shadow-sky-50 antialiased p-3 md:p-5 rounded-full hover:bg-sky-500"
+            className="flex-none text-2xl font-bold text-sky-200  shadow-sky-50 antialiased p-3 md:p-5 rounded-full hover:bg-sky-500 invisible md:visible"
             onClick={() => navigate("/")}
           >
             Pokemon App
@@ -53,7 +53,7 @@ export const Navbar: FC = () => {
           id="navbar-primary"
           className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
         >
-          <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-center sm:mt-0 sm:pl-5">
+          <div className="flex flex-col gap-5 mt-5 md:flex-row md:items-center md:justify-center md:mt-0 md:pl-5">
             <button
               className="font-medium text-lg mx-3 text-sky-50 bg-sky-700 px-10 py-3 rounded-full hover:bg-sky-400 hover:text-xl"
               onClick={() => navigate("/")}
