@@ -55,22 +55,22 @@ const ListPokemon: FC = () => {
 
   return (
     <Layout>
-      {loading ? (
-        <div className="h-screen">
-          <PacmanLoader
-            color={color}
-            loading={loading}
-            cssOverride={override}
-            size={100}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
-      ) : (
-        <div className="h-screen">
-          <div className="grid gap-5 md:gap-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+      <div className="h-full md:h-screen">
+        {loading ? (
+          <div className="">
+            <PacmanLoader
+              color={color}
+              loading={loading}
+              cssOverride={override}
+              size={100}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
+        ) : (
+          <div className=" grid gap-5 md:gap-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             {items.map((item) => (
-              <div className="text-center items-center  bg-sky-600 hover:bg-sky-300 bg-opacity-20 rounded-t-full rounded-b-lg hover:scale-105">
+              <div className="text-center items-center bg-sky-600 hover:bg-sky-300 bg-opacity-20 rounded-t-full rounded-b-lg hover:scale-105">
                 <div
                   key={item.key}
                   className="flex flex-col align-middle w-full aspect-square"
@@ -97,8 +97,8 @@ const ListPokemon: FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </Layout>
   );
 };

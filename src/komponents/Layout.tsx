@@ -9,7 +9,7 @@ interface Props {
 export const Layout: FC<Props> = (props) => {
   const { children } = props;
   return (
-    <div className="bg-gradient-to-b from-sky-950 via to-sky-900">
+    <div className="h-full bg-gradient-to-b from-sky-950 via to-sky-900">
       <Navbar />
       <div className=" p-5 md:p-10">{children}</div>;
     </div>
