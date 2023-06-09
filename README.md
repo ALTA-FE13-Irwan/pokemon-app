@@ -1,1 +1,1 @@
-# pokemon-app vercel : https://pokemon-app-rose-three.vercel.app/
+# pokemon-app web : https://www.pokemon.my.id
